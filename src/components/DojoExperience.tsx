@@ -1,13 +1,12 @@
 import React, { useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { Sky, Environment, OrbitControls } from '@react-three/drei';
+import { Sky, Environment } from '@react-three/drei';
 import { Scene } from './Scene';
 import { Character } from './Character';
 import { Lighting } from './Lighting';
 
 export const DojoExperience: React.FC = () => {
-  const isFirstPerson = useRef(false);
-  
+  //const isFirstPerson = useRef(false);
   return (
     <Canvas
       shadows
@@ -26,14 +25,17 @@ export const DojoExperience: React.FC = () => {
       
       {/* Character */}
       <Character />
-      
-      {/* Controls - Only active when not in first person */}
+
+      {/*
+      // Controls - Only active when not in first person
       {!isFirstPerson.current && <OrbitControls />}
       
-      {/* Debug Controls */}
+      //Debug Controls 
       {process.env.NODE_ENV === 'development' && !isFirstPerson.current && (
         <axesHelper args={[5]} />
-      )}
+      )} 
+       */}
+       
     </Canvas>
   );
 };

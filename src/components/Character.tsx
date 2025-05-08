@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useFrame, useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 import { useKeyboardControls } from '../hooks/useKeyboardControls';
+import { useMouseControls } from '../hooks/useMouseControls';
 import { useCollisionDetection } from '../hooks/useCollisionDetection';
 
 export const Character: React.FC = () => {
@@ -13,13 +14,13 @@ export const Character: React.FC = () => {
   const direction = useRef(new THREE.Vector3());
   const rotation = useRef(new THREE.Euler(0, 0, 0));
   const speed = useRef(0);
-  const targetRotation = useRef(0);
   
-  // Get keyboard controls
+  // Get controls
   const { moveForward, moveBackward, moveLeft, moveRight, run } = useKeyboardControls();
+  const mouseControls = useMouseControls();
   const { checkCollision } = useCollisionDetection();
   
-  // Handle movement
+  // Handle movement and camera
   useFrame((state, delta) => {
     if (!characterRef.current) return;
     
@@ -43,20 +44,10 @@ export const Character: React.FC = () => {
       speed.current = run ? 4 : 1.5;
     }
     
-    // Normalize direction and apply speed
+    // Apply camera rotation to movement direction
     if (direction.current.length() > 0) {
       direction.current.normalize();
-      
-      // Calculate target rotation based on movement direction
-      targetRotation.current = Math.atan2(direction.current.x, direction.current.z);
-      
-      // Smoothly rotate character
-      const rotationSpeed = 10;
-      const angleDiff = THREE.MathUtils.euclideanModulo(targetRotation.current - rotation.current.y, 2 * Math.PI);
-      rotation.current.y += angleDiff * rotationSpeed * delta;
-      
-      // Update character rotation
-      characterRef.current.rotation.y = rotation.current.y;
+      direction.current.applyEuler(mouseControls.getRotation());
     }
     
     // Update velocity and check collisions
@@ -69,10 +60,8 @@ export const Character: React.FC = () => {
       characterRef.current.position.copy(newPosition);
       
       // Update camera position to follow character
-      const cameraOffset = new THREE.Vector3(0, 2, 5);
-      const targetCameraPosition = newPosition.clone().add(cameraOffset);
-      camera.position.lerp(targetCameraPosition, 0.1);
-      camera.lookAt(newPosition);
+      const cameraOffset = new THREE.Vector3(0, 1.8, 0);
+      camera.position.copy(newPosition.clone().add(cameraOffset));
     }
   });
   
