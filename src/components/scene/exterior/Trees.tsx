@@ -1,18 +1,19 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 export const Trees: React.FC = () => {
   const treesRef = useRef<THREE.Group>(null);
   
   // Create bark texture
-  const barkTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/35201/tree-oak-bark-texture-large.jpg');
+  const barkTexture = useTexture('https://images.pexels.com/photos/172292/pexels-photo-172292.jpeg');
   barkTexture.wrapS = THREE.RepeatWrapping;
   barkTexture.wrapT = THREE.RepeatWrapping;
   barkTexture.repeat.set(1, 3);
   
   // Create leaf texture
-  const leafTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/338936/pexels-photo-338936.jpeg');
+  const leafTexture = useTexture('https://images.pexels.com/photos/338936/pexels-photo-338936.jpeg');
   
   const treePositions = [
     [8, 0, 8],

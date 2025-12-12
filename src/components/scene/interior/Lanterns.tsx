@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 export const Lanterns: React.FC = () => {
   const lanternsRef = useRef<THREE.Group>(null);
   
   // Create paper texture for lanterns
-  const paperTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/7185164/pexels-photo-7185164.jpeg');
+  const paperTexture = useTexture('https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg');
   paperTexture.wrapS = THREE.RepeatWrapping;
   paperTexture.wrapT = THREE.RepeatWrapping;
   paperTexture.repeat.set(1, 1);
@@ -29,7 +30,7 @@ export const Lanterns: React.FC = () => {
         lantern.rotation.z = Math.cos(time * 0.2) * 0.05;
         
         // Pulsing light effect
-        const light = lantern.children.find(child => child.type === 'PointLight');
+        const light = lantern.children.find(child => child.type === 'PointLight') as THREE.PointLight | undefined;
         if (light) {
           light.intensity = 0.5 + Math.sin(time) * 0.1;
         }
