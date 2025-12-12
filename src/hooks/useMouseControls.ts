@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useThree } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -11,11 +11,13 @@ interface MouseState {
 
 export const useMouseControls = () => {
   const { camera } = useThree();
+  const [isLocked, setIsLocked] = useState(false);
+  
   const mouseState = useRef<MouseState>({
     sensitivity: 0.002, // Configurable between 0.001 and 0.02
     isLocked: false,
     euler: new THREE.Euler(0, 0, 0, 'YXZ'),
-    prevTime: performance.now()
+    prevTime: 0
   });
 
   useEffect(() => {
@@ -38,8 +40,9 @@ export const useMouseControls = () => {
     //   camera.rotation.x = newRotationX;
     //   camera.rotation.y = newRotationY;
     //   camera.rotation.z = 0; // Reset Z rotation
-
+    
     const handleMouseMove = (event: MouseEvent) => {
+      // Use ref for immediate check inside loop
       if (!mouseState.current.isLocked) return;
 
       const currentTime = performance.now();
@@ -65,7 +68,9 @@ export const useMouseControls = () => {
     };
 
     const handlePointerLockChange = () => {
-      mouseState.current.isLocked = document.pointerLockElement === document.querySelector('canvas');
+      const locked = document.pointerLockElement === document.querySelector('canvas');
+      mouseState.current.isLocked = locked;
+      setIsLocked(locked);
     };
 
     const handleClick = () => {
@@ -84,10 +89,10 @@ export const useMouseControls = () => {
       document.removeEventListener('pointerlockchange', handlePointerLockChange);
       document.querySelector('canvas')?.removeEventListener('click', handleClick);
     };
-  }, [camera ]);
+  }, [camera]);
 
   return {
-    isLocked: mouseState.current.isLocked,
+    isLocked, // Now using state
     setSensitivity: (value: number) => {
       mouseState.current.sensitivity = THREE.MathUtils.clamp(value, 0.001, 0.02);
     },
