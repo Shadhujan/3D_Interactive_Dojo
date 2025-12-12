@@ -10,9 +10,10 @@ import { BambooGrove } from './exterior/BambooGrove';
 export const Exterior: React.FC = () => {
   const groupRef = useRef<THREE.Group>(null);
   
-  useFrame(({ clock }) => {
+  useFrame(() => {
     // Subtle ambient animation for exterior elements
-    const t = clock.getElapsedTime();
+    // Subtle ambient animation for exterior elements
+
     
     if (groupRef.current) {
       // No animation for the main group
