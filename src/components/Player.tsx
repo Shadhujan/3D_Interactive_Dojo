@@ -1,5 +1,6 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import { useThree, useFrame } from '@react-three/fiber';
+import * as THREE from 'three';
 import { Vector3, Euler } from 'three';
 import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import { useMouseControls } from '../hooks/useMouseControls';
@@ -19,20 +20,14 @@ export const Player: React.FC<PlayerProps> = ({ isFirstPerson }) => {
   
   // Set up controls
   const { moveForward, moveBackward, moveLeft, moveRight, run } = useKeyboardControls();
-  const { rotation } = useMouseControls(isFirstPerson);
+  useMouseControls(); // Hook maintains camera rotation internally
   const { checkCollision } = useCollisionDetection();
   
-  // Debug movement state
-  useEffect(() => {
-    console.log('Movement controls initialized:', {
-      isFirstPerson,
-      initialPosition: position.current,
-      cameraPosition: camera.position
-    });
-  }, []);
+  // Debug log removed
+
   
   // Update player position based on controls
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!isFirstPerson) return;
     
     const speed = run ? 5 : 2;
