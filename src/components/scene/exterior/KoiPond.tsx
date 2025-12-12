@@ -36,6 +36,25 @@ export const KoiPond: React.FC<KoiPondProps> = ({ position = [0, 0, 0] }) => {
     }
   });
   
+  interface RockData {
+    i: number;
+    position: [number, number, number];
+    scale: number;
+    rotation: [number, number, number];
+  }
+
+  const [rocksData] = React.useState<RockData[]>(() => 
+    [...Array(7)].map((_, i) => {
+      const angle = (i / 7) * Math.PI * 2;
+      const radius = 4.5;
+      const x = Math.cos(angle) * radius;
+      const z = Math.sin(angle) * radius;
+      const scale = 0.2 + Math.random() * 0.3;
+      const rotation = [Math.random(), Math.random(), Math.random()] as [number, number, number];
+      return { i, position: [x, 0.2, z] as [number, number, number], scale, rotation };
+    })
+  );
+
   return (
     <group position={position}>
       {/* Pond edge */}
@@ -78,18 +97,11 @@ export const KoiPond: React.FC<KoiPondProps> = ({ position = [0, 0, 0] }) => {
       </group>
       
       {/* Decorative rocks */}
-      {[...Array(7)].map((_, i) => {
-        const angle = (i / 7) * Math.PI * 2;
-        const radius = 4.5;
-        const x = Math.cos(angle) * radius;
-        const z = Math.sin(angle) * radius;
-        const scale = 0.2 + Math.random() * 0.3;
-        
-        return (
+      {rocksData.map(({ i, position, scale, rotation }) => (
           <mesh 
             key={i} 
-            position={[x, 0.2, z]} 
-            rotation={[Math.random(), Math.random(), Math.random()]}
+            position={position} 
+            rotation={rotation}
             scale={[scale, scale, scale]}
             castShadow
             receiveShadow
@@ -101,8 +113,7 @@ export const KoiPond: React.FC<KoiPondProps> = ({ position = [0, 0, 0] }) => {
               metalness={0.1}
             />
           </mesh>
-        );
-      })}
+        ))}
     </group>
   );
 };
