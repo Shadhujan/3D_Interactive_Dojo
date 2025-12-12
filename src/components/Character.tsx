@@ -12,7 +12,6 @@ export const Character: React.FC = () => {
   // Movement state
   const velocity = useRef(new THREE.Vector3());
   const direction = useRef(new THREE.Vector3());
-  const rotation = useRef(new THREE.Euler(0, 0, 0));
   const speed = useRef(0);
   
   // Get controls
@@ -21,7 +20,7 @@ export const Character: React.FC = () => {
   const { checkCollision } = useCollisionDetection();
   
   // Handle movement and camera
-  useFrame((state, delta) => {
+  useFrame((_, delta) => {
     if (!characterRef.current) return;
     
     // Calculate movement direction
