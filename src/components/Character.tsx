@@ -70,19 +70,17 @@ export const Character: React.FC<CharacterProps> = ({ mouseSensitivity = 0.002 }
   
   return (
     <group ref={characterRef}>
-      {/* Character body */}
+      {/* Character visuals hidden for FPS view
       <mesh castShadow position={[0, 1, 0]}>
         <capsuleGeometry args={[0.3, 1, 8, 16]} />
         <meshStandardMaterial color="#4A5568" />
       </mesh>
       
-      {/* Head */}
       <mesh castShadow position={[0, 1.8, 0]}>
         <sphereGeometry args={[0.25, 16, 16]} />
         <meshStandardMaterial color="#4A5568" />
       </mesh>
       
-      {/* Eyes */}
       <mesh position={[0.1, 1.85, 0.2]}>
         <sphereGeometry args={[0.05, 8, 8]} />
         <meshStandardMaterial color="white" />
@@ -91,6 +89,7 @@ export const Character: React.FC<CharacterProps> = ({ mouseSensitivity = 0.002 }
         <sphereGeometry args={[0.05, 8, 8]} />
         <meshStandardMaterial color="white" />
       </mesh>
+      */}
     </group>
   );
 };
