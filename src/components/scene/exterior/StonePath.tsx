@@ -1,10 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as THREE from 'three';
 
 interface StonePathProps {
   position?: [number, number, number];
   rotation?: [number, number, number];
 }
+
+// Define stone positions in a path pattern
+const stonePositions = [
+  [0, 0, 0],
+  [1, 0, 1],
+  [0, 0, 2],
+  [-1, 0, 3],
+  [0, 0, 4],
+  [1, 0, 5],
+  [0, 0, 6],
+  [-1, 0, 7],
+  [0, 0, 8],
+  [0, 0, 9]
+];
 
 export const StonePath: React.FC<StonePathProps> = ({ 
   position = [0, 0, 0],
@@ -16,30 +30,24 @@ export const StonePath: React.FC<StonePathProps> = ({
   stoneTexture.wrapT = THREE.RepeatWrapping;
   stoneTexture.repeat.set(1, 1);
   
-  // Define stone positions in a path pattern
-  const stonePositions = [
-    [0, 0, 0],
-    [1, 0, 1],
-    [0, 0, 2],
-    [-1, 0, 3],
-    [0, 0, 4],
-    [1, 0, 5],
-    [0, 0, 6],
-    [-1, 0, 7],
-    [0, 0, 8],
-    [0, 0, 9]
-  ];
+  const [stoneData] = useState<{pos: number[], rotation: number, radius: number}[]>(() => 
+    stonePositions.map((pos) => ({
+      pos,
+      rotation: Math.random() * Math.PI * 2,
+      radius: 0.4 + Math.random() * 0.2
+    }))
+  );
   
   return (
     <group position={position} rotation={rotation as [number, number, number]}>
-      {stonePositions.map((stonePos, i) => (
+      {stoneData.map((data, i) => (
         <mesh 
           key={i} 
-          position={stonePos as [number, number, number]} 
-          rotation={[-Math.PI/2, 0, Math.random() * Math.PI * 2]}
+          position={data.pos as [number, number, number]} 
+          rotation={[-Math.PI/2, 0, data.rotation]}
           receiveShadow
         >
-          <circleGeometry args={[0.4 + Math.random() * 0.2, 8]} />
+          <circleGeometry args={[data.radius, 8]} />
           <meshStandardMaterial 
             map={stoneTexture}
             color="#9E9E9E"
