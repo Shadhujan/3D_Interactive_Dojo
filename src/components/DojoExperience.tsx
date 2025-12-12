@@ -5,7 +5,11 @@ import { Scene } from './Scene';
 import { Character } from './Character';
 import { Lighting } from './Lighting';
 
-export const DojoExperience: React.FC = () => {
+interface DojoExperienceProps {
+  mouseSensitivity?: number;
+}
+
+export const DojoExperience: React.FC<DojoExperienceProps> = ({ mouseSensitivity = 0.002 }) => {
   const [contextLost, setContextLost] = React.useState(false);
 
   // Helper component to listen for context loss
@@ -70,7 +74,7 @@ export const DojoExperience: React.FC = () => {
         <Lighting />
         
         {/* Character */}
-        <Character />
+        <Character mouseSensitivity={mouseSensitivity} />
          
       </Canvas>
     </>

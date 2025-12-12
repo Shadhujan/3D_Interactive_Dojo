@@ -2,9 +2,15 @@ import React, { useState } from 'react';
 import { Info, X, Volume2, VolumeX, Settings, Gamepad2 } from 'lucide-react';
 import { ControlsGuide } from './ControlsGuide';
 
-export const UserInterface: React.FC = () => {
+interface UserInterfaceProps {
+  sensitivity: number;
+  setSensitivity: (value: number) => void;
+}
+
+export const UserInterface: React.FC<UserInterfaceProps> = ({ sensitivity, setSensitivity }) => {
   const [showInfo, setShowInfo] = useState(false);
   const [showControls, setShowControls] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
   const [muted, setMuted] = useState(false);
   
   return (
@@ -31,6 +37,7 @@ export const UserInterface: React.FC = () => {
             <Gamepad2 size={20} />
           </button>
           <button 
+            onClick={() => setShowSettings(!showSettings)}
             className="w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
           >
             <Settings size={20} />
@@ -43,6 +50,41 @@ export const UserInterface: React.FC = () => {
         </div>
       </div>
       
+      {/* Settings Panel */}
+      {showSettings && (
+         <div className="fixed inset-0 flex items-center justify-center p-4 bg-black/70 z-20 pointer-events-auto">
+            <div className="bg-white rounded-xl max-w-md w-full p-6 relative">
+              <button 
+                onClick={() => setShowSettings(false)}
+                className="absolute top-4 right-4 text-gray-500 hover:text-gray-800"
+              >
+                <X size={24} />
+              </button>
+              <h2 className="text-2xl font-bold mb-4">Settings</h2>
+              
+              <div className="mb-6">
+                <label htmlFor="sensitivity" className="block text-sm font-medium text-gray-700 mb-2">
+                  Mouse Sensitivity
+                </label>
+                <input
+                  id="sensitivity"
+                  type="range"
+                  min="0.0005"
+                  max="0.1"
+                  step="0.0001"
+                  value={sensitivity}
+                  onChange={(e) => setSensitivity(parseFloat(e.target.value))}
+                  className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                />
+                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                  <span>Slow</span>
+                  <span>Fast</span>
+                </div>
+              </div>
+            </div>
+         </div>
+      )}
+
       {/* Info Panel */}
       {showInfo && (
         <div className="fixed inset-0 flex items-center justify-center p-4 bg-black/70 z-20 pointer-events-auto">

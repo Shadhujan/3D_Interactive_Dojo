@@ -9,16 +9,20 @@ interface MouseState {
   prevTime: number;
 }
 
-export const useMouseControls = () => {
+export const useMouseControls = (sensitivity: number = 0.002) => {
   const { camera } = useThree();
   const [isLocked, setIsLocked] = useState(false);
   
   const mouseState = useRef<MouseState>({
-    sensitivity: 0.002, // Configurable between 0.001 and 0.02
+    sensitivity: sensitivity, 
     isLocked: false,
     euler: new THREE.Euler(0, 0, 0, 'YXZ'),
     prevTime: 0
   });
+
+  useEffect(() => {
+    mouseState.current.sensitivity = sensitivity;
+  }, [sensitivity]);
 
   useEffect(() => {
     //if (!isActive) return;
@@ -93,9 +97,7 @@ export const useMouseControls = () => {
 
   return {
     isLocked, // Now using state
-    setSensitivity: (value: number) => {
-      mouseState.current.sensitivity = THREE.MathUtils.clamp(value, 0.001, 0.02);
-    },
+
     getRotation: () => mouseState.current.euler.clone()
   };
 };

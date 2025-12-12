@@ -5,7 +5,11 @@ import { useKeyboardControls } from '../hooks/useKeyboardControls';
 import { useMouseControls } from '../hooks/useMouseControls';
 import { useCollisionDetection } from '../hooks/useCollisionDetection';
 
-export const Character: React.FC = () => {
+interface CharacterProps {
+  mouseSensitivity?: number;
+}
+
+export const Character: React.FC<CharacterProps> = ({ mouseSensitivity = 0.002 }) => {
   const characterRef = useRef<THREE.Group>(null);
   const { camera } = useThree();
   
@@ -16,7 +20,7 @@ export const Character: React.FC = () => {
   
   // Get controls
   const { moveForward, moveBackward, moveLeft, moveRight, run } = useKeyboardControls();
-  const mouseControls = useMouseControls();
+  const mouseControls = useMouseControls(mouseSensitivity);
   const { checkCollision } = useCollisionDetection();
   
   // Handle movement and camera
