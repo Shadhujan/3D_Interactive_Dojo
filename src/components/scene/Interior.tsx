@@ -10,8 +10,8 @@ export const Interior: React.FC = () => {
   return (
     <group position={[0, 0, 0]}>
       <TatamiFloor position={[0, 0.01, 0]} />
-      <Kamidana position={[0, 2, -5.9]} />
-      <WeaponRack position={[5.9, 1.5, 0]} rotation={[0, -Math.PI/2, 0]} />
+      <Kamidana position={[0, 2, -5.5]} />
+      <WeaponRack position={[5.9, 1.5, 0]} rotation={[0, Math.PI, 0]} />
       <Scrolls />
       <Zabuton />
       <Lanterns />

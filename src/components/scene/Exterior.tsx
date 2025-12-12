@@ -23,7 +23,7 @@ export const Exterior: React.FC = () => {
   return (
     <group ref={groupRef}>
       <DojoBuilding position={[0, 0, 0]} />
-      <KoiPond position={[-8, 0, -5]} />
+      <KoiPond position={[-13, 0, -5]} />
       <Trees />
       <StonePath position={[0, 0.01, 10]} rotation={[0, Math.PI, 0]} />
       <BambooGrove />
