@@ -1,5 +1,6 @@
 import React from 'react';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 interface TatamiFloorProps {
   position?: [number, number, number];
@@ -7,7 +8,7 @@ interface TatamiFloorProps {
 
 export const TatamiFloor: React.FC<TatamiFloorProps> = ({ position = [0, 0, 0] }) => {
   // Create tatami texture
-  const tatamiTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/4946965/pexels-photo-4946965.jpeg');
+  const tatamiTexture = useTexture('https://images.pexels.com/photos/4946965/pexels-photo-4946965.jpeg');
   tatamiTexture.wrapS = THREE.RepeatWrapping;
   tatamiTexture.wrapT = THREE.RepeatWrapping;
   tatamiTexture.repeat.set(1, 1);

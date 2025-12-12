@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 interface DojoBuildingProps {
   position?: [number, number, number];
@@ -9,13 +10,14 @@ export const DojoBuilding: React.FC<DojoBuildingProps> = ({ position = [0, 0, 0]
   const buildingRef = useRef<THREE.Group>(null);
   
   // Create wood texture
-  const woodTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/129733/pexels-photo-129733.jpeg');
+  // Create wood texture
+  const woodTexture = useTexture('https://images.pexels.com/photos/129733/pexels-photo-129733.jpeg');
   woodTexture.wrapS = THREE.RepeatWrapping;
   woodTexture.wrapT = THREE.RepeatWrapping;
   woodTexture.repeat.set(4, 4);
   
   // Create roof texture
-  const roofTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/220182/pexels-photo-220182.jpeg');
+  const roofTexture = useTexture('https://images.pexels.com/photos/220182/pexels-photo-220182.jpeg');
   roofTexture.wrapS = THREE.RepeatWrapping;
   roofTexture.wrapT = THREE.RepeatWrapping;
   roofTexture.repeat.set(8, 8);

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 interface WeaponRackProps {
   position?: [number, number, number];
@@ -14,13 +15,13 @@ export const WeaponRack: React.FC<WeaponRackProps> = ({
   const rackRef = useRef<THREE.Group>(null);
   
   // Create wood texture for the rack
-  const woodTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/172292/pexels-photo-172292.jpeg');
+  const woodTexture = useTexture('https://images.pexels.com/photos/172292/pexels-photo-172292.jpeg');
   woodTexture.wrapS = THREE.RepeatWrapping;
   woodTexture.wrapT = THREE.RepeatWrapping;
   woodTexture.repeat.set(1, 1);
   
   // Create bokken texture
-  const bokkenTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/129733/pexels-photo-129733.jpeg');
+  const bokkenTexture = useTexture('https://images.pexels.com/photos/129733/pexels-photo-129733.jpeg');
   bokkenTexture.wrapS = THREE.RepeatWrapping;
   bokkenTexture.wrapT = THREE.RepeatWrapping;
   bokkenTexture.repeat.set(1, 4);

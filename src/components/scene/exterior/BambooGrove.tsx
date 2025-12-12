@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 // Generate positions for bamboo in a semi-circle around the perimeter
 const count = 30;
@@ -18,13 +19,13 @@ export const BambooGrove: React.FC = () => {
   const bambooRef = useRef<THREE.Group>(null);
   
   // Create bamboo texture
-  const bambooTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/192320/pexels-photo-192320.jpeg');
+  const bambooTexture = useTexture('https://images.pexels.com/photos/192320/pexels-photo-192320.jpeg');
   bambooTexture.wrapS = THREE.RepeatWrapping;
   bambooTexture.wrapT = THREE.RepeatWrapping;
   bambooTexture.repeat.set(1, 5);
   
   // Create bamboo leaf texture
-  const leafTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg');
+  const leafTexture = useTexture('https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg');
   
   interface BambooData {
     position: [number, number, number];

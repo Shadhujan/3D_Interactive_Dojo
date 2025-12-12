@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 interface StonePathProps {
   position?: [number, number, number];
@@ -25,7 +26,7 @@ export const StonePath: React.FC<StonePathProps> = ({
   rotation = [0, 0, 0]
 }) => {
   // Create stone texture
-  const stoneTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/220182/pexels-photo-220182.jpeg');
+  const stoneTexture = useTexture('https://images.pexels.com/photos/220182/pexels-photo-220182.jpeg');
   stoneTexture.wrapS = THREE.RepeatWrapping;
   stoneTexture.wrapT = THREE.RepeatWrapping;
   stoneTexture.repeat.set(1, 1);

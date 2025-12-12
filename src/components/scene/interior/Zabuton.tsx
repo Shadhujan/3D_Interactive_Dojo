@@ -1,12 +1,13 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 export const Zabuton: React.FC = () => {
   const zabutonRef = useRef<THREE.Group>(null);
   
   // Create fabric texture
-  const fabricTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg');
+  const fabricTexture = useTexture('https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg');
   fabricTexture.wrapS = THREE.RepeatWrapping;
   fabricTexture.wrapT = THREE.RepeatWrapping;
   fabricTexture.repeat.set(1, 1);

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 interface KoiPondProps {
   position?: [number, number, number];
@@ -11,7 +12,8 @@ export const KoiPond: React.FC<KoiPondProps> = ({ position = [0, 0, 0] }) => {
   const koiFishRef = useRef<THREE.Group>(null);
   
   // Create water texture
-  const waterTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/1426718/pexels-photo-1426718.jpeg');
+  // Create water texture
+  const waterTexture = useTexture('https://images.pexels.com/photos/1426718/pexels-photo-1426718.jpeg');
   waterTexture.wrapS = THREE.RepeatWrapping;
   waterTexture.wrapT = THREE.RepeatWrapping;
   waterTexture.repeat.set(3, 3);

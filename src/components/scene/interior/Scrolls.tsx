@@ -1,18 +1,19 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 export const Scrolls: React.FC = () => {
   const scrollsRef = useRef<THREE.Group>(null);
   
   // Create scroll texture
-  const scrollTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg');
+  const scrollTexture = useTexture('https://images.pexels.com/photos/235985/pexels-photo-235985.jpeg');
   scrollTexture.wrapS = THREE.RepeatWrapping;
   scrollTexture.wrapT = THREE.RepeatWrapping;
   scrollTexture.repeat.set(1, 1);
   
   // Create calligraphy texture
-  const calligraphyTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/6185245/pexels-photo-6185245.jpeg');
+  const calligraphyTexture = useTexture('https://images.pexels.com/photos/6185245/pexels-photo-6185245.jpeg');
   
   useFrame(({ clock }) => {
     // Gentle scroll swaying animation

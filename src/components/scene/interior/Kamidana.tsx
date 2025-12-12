@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+import { useTexture } from '@react-three/drei';
 
 interface KamidanaProps {
   position?: [number, number, number];
@@ -10,7 +11,8 @@ export const Kamidana: React.FC<KamidanaProps> = ({ position = [0, 0, 0] }) => {
   const shrineRef = useRef<THREE.Group>(null);
   
   // Create wood texture for the shrine
-  const woodTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/172292/pexels-photo-172292.jpeg');
+  // Create wood texture for the shrine
+  const woodTexture = useTexture('https://images.pexels.com/photos/172292/pexels-photo-172292.jpeg');
   woodTexture.wrapS = THREE.RepeatWrapping;
   woodTexture.wrapT = THREE.RepeatWrapping;
   woodTexture.repeat.set(1, 1);
