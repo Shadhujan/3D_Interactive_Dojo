@@ -1,6 +1,18 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
+
+// Generate positions for bamboo in a semi-circle around the perimeter
+const count = 30;
+const radius = 20;
+const bambooPositions: [number, number, number][] = [];
+
+for (let i = 0; i < count; i++) {
+  const angle = (i / count) * Math.PI * 1.5 + Math.PI / 4;
+  const x = Math.cos(angle) * radius;
+  const z = Math.sin(angle) * radius;
+  bambooPositions.push([x, 0, z]);
+}
 
 export const BambooGrove: React.FC = () => {
   const bambooRef = useRef<THREE.Group>(null);
@@ -14,17 +26,27 @@ export const BambooGrove: React.FC = () => {
   // Create bamboo leaf texture
   const leafTexture = new THREE.TextureLoader().load('https://images.pexels.com/photos/807598/pexels-photo-807598.jpeg');
   
-  // Generate positions for bamboo in a semi-circle around the perimeter
-  const bambooPositions: [number, number, number][] = [];
-  const count = 30;
-  const radius = 20;
-  
-  for (let i = 0; i < count; i++) {
-    const angle = (i / count) * Math.PI * 1.5 + Math.PI / 4;
-    const x = Math.cos(angle) * radius;
-    const z = Math.sin(angle) * radius;
-    bambooPositions.push([x, 0, z]);
+  interface BambooData {
+    position: [number, number, number];
+    height: number;
+    segments: number;
+    leaves: { leafHeight: number; leafAngle: number; leafSize: number; j: number }[];
+    i: number;
   }
+
+  const [bambooData] = useState<BambooData[]>(() => 
+    bambooPositions.map((position, i) => {
+      const height = 4 + Math.random() * 3;
+      const segments = Math.floor(height / 0.5);
+      const leaves = [...Array(Math.floor(height / 1.5))].map((_, j) => ({
+        leafHeight: height * 0.6 + j * 0.5,
+        leafAngle: Math.random() * Math.PI * 2,
+        leafSize: 0.3 + Math.random() * 0.3,
+        j
+      }));
+      return { position, height, segments, leaves, i };
+    })
+  );
   
   useFrame(({ clock }) => {
     // Animate bamboo swaying gently
@@ -39,11 +61,7 @@ export const BambooGrove: React.FC = () => {
   
   return (
     <group ref={bambooRef}>
-      {bambooPositions.map((position, i) => {
-        const height = 4 + Math.random() * 3;
-        const segments = Math.floor(height / 0.5);
-        
-        return (
+      {bambooData.map(({ position, segments, leaves, i }) => (
           <group key={i} position={position}>
             {/* Bamboo stalk with segments */}
             {[...Array(segments)].map((_, j) => (
@@ -79,12 +97,7 @@ export const BambooGrove: React.FC = () => {
             ))}
             
             {/* Bamboo leaves */}
-            {[...Array(Math.floor(height / 1.5))].map((_, j) => {
-              const leafHeight = height * 0.6 + j * 0.5;
-              const leafAngle = Math.random() * Math.PI * 2;
-              const leafSize = 0.3 + Math.random() * 0.3;
-              
-              return (
+            {leaves.map(({ leafHeight, leafAngle, leafSize, j }) => (
                 <group 
                   key={`leaf-group-${j}`} 
                   position={[0, leafHeight, 0]}
@@ -108,11 +121,9 @@ export const BambooGrove: React.FC = () => {
                     </mesh>
                   ))}
                 </group>
-              );
-            })}
+            ))}
           </group>
-        );
-      })}
+      ))}
     </group>
   );
 };
