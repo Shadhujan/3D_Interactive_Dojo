@@ -9,16 +9,16 @@ interface StonePathProps {
 
 // Define stone positions in a path pattern
 const stonePositions = [
-  [0, 0, 0],
-  [1, 0, 1],
-  [0, 0, 2],
-  [-1, 0, 3],
-  [0, 0, 4],
-  [1, 0, 5],
-  [0, 0, 6],
-  [-1, 0, 7],
-  [0, 0, 8],
-  [0, 0, 9]
+  // Z=0 is at World Z=10
+  // Increasing Z moves CLOSER to the Dojo (which is at World Z=6)
+  // Keep Z < 3 to stay outside the steps
+  // Negative Z values move AWAY from the Dojo
+  [0, 0, -2],   // Far away
+  [-1, 0, -1],  
+  [0, 0, 0],    // Start position
+  [0.8, 0, 1.2],
+  [-0.6, 0, 2.0],
+  [0.5, 0, 2.8] // Closest to door (approx World Z=7.2)
 ];
 
 export const StonePath: React.FC<StonePathProps> = ({ 

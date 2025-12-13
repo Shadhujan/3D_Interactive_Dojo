@@ -31,11 +31,12 @@ export const DojoBuilding: React.FC<DojoBuildingProps> = ({ position = [0, 0, 0]
           map={woodTexture}
           roughness={0.8}
           metalness={0.1}
+          side={THREE.DoubleSide}
         />
       </mesh>
       
       {/* Roof */}
-      <group position={[0, 3, 0]}>
+      <group position={[0, 2.99, 0]}>
         {/* Roof base */}
         <mesh position={[0, 0.5, 0]} castShadow>
           <boxGeometry args={[14, 1, 14]} />
@@ -70,7 +71,7 @@ export const DojoBuilding: React.FC<DojoBuildingProps> = ({ position = [0, 0, 0]
       </mesh>
       
       {/* Steps */}
-      <mesh position={[0, 0.1, 7]} receiveShadow>
+      <mesh position={[0, 0.1, 7.01]} receiveShadow>
         <boxGeometry args={[4, 0.2, 2]} />
         <meshStandardMaterial 
           color="#8D6E63"
