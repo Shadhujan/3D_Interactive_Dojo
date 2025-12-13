@@ -81,15 +81,29 @@ export const BambooGrove: React.FC = () => {
 
     // 2. Set Leaves (Initial positions)
     // For static performance, we calculate world position roughly
+    // 2. Set Leaves (Initial positions)
+    // For static performance, we calculate world position roughly
     leafData.forEach((leaf, i) => {
        const parentStalk = stalkData[leaf.stalkIndex];
        
        // Calculate leaf position based on parent stalk pos + height offset
-       // Approximation: We mostly ignore parent tilt for initial placement simplicity or apply basic offset
-       dummy.position.set(parentStalk.position[0], leaf.relY, parentStalk.position[2]);
+       // Fix: Apply parent stalk's rotation to the height offset
+       const leafOffset = new THREE.Vector3(0, leaf.relY, 0);
+       const stalkRotation = new THREE.Euler(parentStalk.tilt[0], 0, parentStalk.tilt[2]);
+       leafOffset.applyEuler(stalkRotation);
+       
+       dummy.position.set(
+           parentStalk.position[0] + leafOffset.x,
+           parentStalk.position[1] + leafOffset.y,
+           parentStalk.position[2] + leafOffset.z
+       );
        
        // Rotation
        dummy.rotation.set(0, leaf.angle, -1.2 + leaf.tilt);
+       // Add parent rotation to leaf for better alignment (optional, but looks better)
+       // dummy.rotation.x += parentStalk.tilt[0]; 
+       // dummy.rotation.z += parentStalk.tilt[2];
+       
        dummy.scale.set(leaf.scale, leaf.scale, leaf.scale);
        dummy.updateMatrix();
        leafMeshRef.current!.setMatrixAt(i, dummy.matrix);
