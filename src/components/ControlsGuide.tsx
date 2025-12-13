@@ -8,7 +8,8 @@ import {
   MousePointer,
   KeySquare,
   Footprints,
-  ArrowUpRightFromSquare
+
+  X
 } from 'lucide-react';
 
 export const ControlsGuide: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -17,9 +18,9 @@ export const ControlsGuide: React.FC<{ onClose: () => void }> = ({ onClose }) =>
       <div className="bg-white rounded-xl max-w-2xl w-full p-8 m-4 relative">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-colors"
+          className="absolute top-4 right-4 p-2 text-gray-500 hover:text-red-600 hover:bg-gray-100 rounded-full transition-colors pointer-events-auto"
         >
-          <ArrowUpRightFromSquare size={24} />
+          <X size={24} />
         </button>
 
         <h2 className="text-2xl font-bold mb-6">Movement Controls</h2>
