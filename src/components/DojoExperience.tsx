@@ -4,12 +4,17 @@ import { Sky, Environment } from '@react-three/drei';
 import { Scene } from './Scene';
 import { Character } from './Character';
 import { Lighting } from './Lighting';
+import { BoundaryVisualizer } from './scene/BoundaryVisualizer';
 
 interface DojoExperienceProps {
   mouseSensitivity?: number;
+  showBoundary?: boolean;
 }
 
-export const DojoExperience: React.FC<DojoExperienceProps> = ({ mouseSensitivity = 0.002 }) => {
+export const DojoExperience: React.FC<DojoExperienceProps> = ({ 
+  mouseSensitivity = 0.002,
+  showBoundary = false
+}) => {
   const [contextLost, setContextLost] = React.useState(false);
 
   // Helper component to listen for context loss
@@ -75,6 +80,9 @@ export const DojoExperience: React.FC<DojoExperienceProps> = ({ mouseSensitivity
         
         {/* Character */}
         <Character mouseSensitivity={mouseSensitivity} />
+        
+        {/* Boundary Visualizer */}
+        <BoundaryVisualizer visible={showBoundary} />
          
       </Canvas>
     </>

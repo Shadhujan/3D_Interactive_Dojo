@@ -1,13 +1,20 @@
 import React, { useState } from 'react';
-import { Info, X, Volume2, VolumeX, Settings, Gamepad2 } from 'lucide-react';
+import { Info, X, Volume2, VolumeX, Settings, Gamepad2, CircleDashed } from 'lucide-react';
 import { ControlsGuide } from './ControlsGuide';
 
 interface UserInterfaceProps {
   sensitivity: number;
   setSensitivity: (value: number) => void;
+  showBoundary: boolean;
+  setShowBoundary: (value: boolean) => void;
 }
 
-export const UserInterface: React.FC<UserInterfaceProps> = ({ sensitivity, setSensitivity }) => {
+export const UserInterface: React.FC<UserInterfaceProps> = ({ 
+  sensitivity, 
+  setSensitivity,
+  showBoundary, 
+  setShowBoundary
+}) => {
   const [showInfo, setShowInfo] = useState(false);
   const [showControls, setShowControls] = useState(false);
   const [showSettings, setShowSettings] = useState(false);
@@ -26,6 +33,12 @@ export const UserInterface: React.FC<UserInterfaceProps> = ({ sensitivity, setSe
               className="w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
             >
               {muted ? <VolumeX size={20} /> : <Volume2 size={20} />}
+            </button>
+            <button 
+              onClick={() => setShowBoundary(!showBoundary)}
+              className={`w-10 h-10 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors ${showBoundary ? 'text-blue-400' : ''}`}
+            >
+              <CircleDashed size={20} />
             </button>
             <button 
               onClick={() => setShowInfo(!showInfo)}

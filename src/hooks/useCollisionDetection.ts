@@ -30,6 +30,8 @@ export const useCollisionDetection = () => {
     }
     
     // Check boundaries of the environment
+    // WORLD BOUNDARY: The player is confined to a circular area with a radius of 25 units.
+    // If the distance from the center (0,0,0) exceeds this radius, a collision is detected.
     const boundaryRadius = 25;
     if (Math.sqrt(position.x * position.x + position.z * position.z) > boundaryRadius) {
       return true; // Out of bounds
