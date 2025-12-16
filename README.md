@@ -56,7 +56,7 @@ Future updates will focus on:
 [https://3d-dojo-shad.vercel.app](https://3d-dojo-shad.vercel.app)
 
 ### Successfull feature will shown here: 
-[3-d-interactive-dojo-git-vercel-deploy-shadhujans-projects.vercel.app](3-d-interactive-dojo-git-vercel-deploy-shadhujans-projects.vercel.app)
+[https://3-d-interactive-dojo-git-vercel-deploy-shadhujans-projects.vercel.app](https://3-d-interactive-dojo-git-vercel-deploy-shadhujans-projects.vercel.app/)
 
 ---
 
