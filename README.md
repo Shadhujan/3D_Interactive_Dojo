@@ -72,6 +72,17 @@ This project is part of a learning and experimentation process with 3D on the we
 
 ---
 
+## Related Tools
+
+### GLB Viewer
+
+I created a dedicated utility to inspect, validate, and debug GLB models before integrating them into this 3D environment. This tool helps in checking model statistics, hierarchy, and scaling.
+
+- **Live Tool:** [https://glb-viewer-shad.vercel.app/](https://glb-viewer-shad.vercel.app/)
+- **Repository:** [https://github.com/Shadhujan/GLB-Viewer](https://github.com/Shadhujan/GLB-Viewer)
+
+---
+
 ## License
 
 This project is open for learning and experimentation.
